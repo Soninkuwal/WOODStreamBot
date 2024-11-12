@@ -30,9 +30,9 @@ class Server:
     PORT = int(env.get("PORT", 8080))
     BIND_ADDRESS = str(env.get("BIND_ADDRESS", "0.0.0.0"))
     PING_INTERVAL = int(env.get("PING_INTERVAL", "1200"))
-    HAS_SSL = str(env.get("HAS_SSL", "0").lower()) in ("1", "true", "t", "yes", "y")
-    NO_PORT = str(env.get("NO_PORT", "0").lower()) in ("1", "true", "t", "yes", "y")
-    FQDN = str(env.get("FQDN", BIND_ADDRESS))
-    URL = "http{}://{}{}/".format(
-        "s" if HAS_SSL else "", FQDN, "" if NO_PORT else ":" + str(PORT)
-    )
+    FQDN = str(getenv('FQDN', 'BIND_ADRESS:PORT')) if not ON_HEROKU or getenv('FQDN', '') else APP_NAME+'.herokuapp.com'
+    HAS_SSL=bool(getenv('HAS_SSL',True))
+    if HAS_SSL:
+        URL = "https://{}/".format(FQDN)
+    else:
+        URL = "https://{}/".format(FQDN)
