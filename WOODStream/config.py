@@ -30,8 +30,8 @@ class Server:
     PORT = int(env.get("PORT", 8080))
     BIND_ADDRESS = str(env.get("BIND_ADDRESS", "0.0.0.0"))
     PING_INTERVAL = int(env.get("PING_INTERVAL", "1200"))
-    FQDN = str(getenv('FQDN', 'BIND_ADRESS:PORT')) 
-    HAS_SSL=bool(getenv('HAS_SSL',True))
+    FQDN = str(env.get('FQDN', 'BIND_ADRESS:PORT')) 
+    HAS_SSL=bool(env.get('HAS_SSL',True))
     if HAS_SSL:
         URL = "https://{}/".format(FQDN)
     else:
